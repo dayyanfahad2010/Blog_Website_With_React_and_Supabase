@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../auth/AuthContext';
 import { supabase } from '../../App';
 import PostCart from '../Post/PostCart';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Header from '../layout/header/header';
 
 const Home = () => {
   const [file,setFile]=useState(null)
@@ -10,14 +12,16 @@ const Home = () => {
   const [loggedUserPosts,setPosts]=useState([])
   const [allPosts,setAllPosts]=useState([])
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const {session,uploadFile,SaveToDB}=UserAuth();
-  
+  const [err, setError] = useState(null);
+  const {session,error,uploadFile,SaveToDB,signOut}=UserAuth();
+     const navigate =useNavigate();
   
     
     const handleFileUpload =async(e)=>{
       e.preventDefault();
        const Filepath =`avatars/${file.name}`
+       console.log(Filepath);
+       
        const result = await uploadFile(Filepath,file)
        if(result.success){
          await SaveToDB(Filepath,des,title)    
@@ -87,15 +91,17 @@ const Home = () => {
        }
        
       }, [session])
+      
   return (
     <div>
-    <div>
-      <input type="text" placeholder='Write Something' value={title} onChange={(e)=>setTitle(e.target.value)} />
+      <Header/>
+    <div className='postAddingDiv'>
+      <input type="text" placeholder='Post Title' value={title} onChange={(e)=>setTitle(e.target.value)} />
       <input type="text" placeholder='Write Something'value={des} onChange={(e)=>setDes(e.target.value)} />
       <input type="file"  onChange={(e)=>setFile(e.target.files[0])}/>
       <button onClick={handleFileUpload}>Post</button>
     </div>
-    <div>
+    <div className='PostDiv'> 
         {allPosts.map((element, index) => (
           <PostCart 
             key={index} 

@@ -5,36 +5,36 @@ import { supabase } from '../../App';
 const PostCart = (props) => {
     console.log(props) ;
     const AddLike = async () => {
-        try {
-            // 1️⃣ Get current likes
-            const currentLikes = props.postData.Likes 
-            
-            // 2️⃣ Update likes in DB
-            const { error } = await supabase
-            .from('Posts')
-            .update({ Likes: currentLikes + 1 })
-            .eq('id', props.postData.id)
-            // console.log();
+    try {
+        const { error } = await supabase
+        .from('Posts')
+        .update({
+            Likes: (props.postData.Likes || 0) + 1
+        })
+        .eq('id', props.postData.id)
+        console.log(props.postData.id);
+        
 
         if (error) {
-        console.error('Like failed:', error.message)
-        return
+            console.error('Like error:', error.message)
+            return
         }
 
-        // 3️⃣ Optimistic UI update (important)
-        props.postData.Likes = currentLikes + 1
-        
-    } catch (err) {
-        console.error('Unexpected error:', err)
-    }
+        // FORCE refresh (because your state is not wired correctly)
+        window.location.reload()
+
+        }
+        catch (err) {
+            console.error(err)
+        }
     }
 
   return (
     <div className="post-card">
         <div className="post-header">
             <div>
-                <h3 className="username">{props.postData.user_id}</h3>
-                <span className="time">2 hours ago</span>
+                <h3 className="username">{props.postData.user_name}</h3>
+                <span className="time">2 hours</span>
             </div>
         </div>
 
@@ -51,7 +51,7 @@ const PostCart = (props) => {
         </div>
 
         <div className="post-actions">
-            <button onClick={AddLike}>👍Like</button> <span>{props.postData.Likes}</span>
+            <button className='LikesBtn' onClick={AddLike}>👍Like</button> <p className='LikesPara'>{props.postData.Likes}</p>
             <button>💬 Comment</button>
             <button>↗ Share</button>
         </div>

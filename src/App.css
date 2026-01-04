@@ -3,3 +3,27 @@
   margin: 0;
   box-sizing: border-box;
 }
+.PostDiv{
+  width: 60%;
+  padding: 10px 100px;
+  margin: 40px auto;
+  justify-content: center;
+  align-items: center;
+}
+.postAddingDiv{
+  width: 40%;
+  margin: 50px auto;
+  position: relative;
+}
+.postAddingDiv input{
+  width: 100%;
+  padding: 20px;
+  margin: 10px auto;
+  border-radius: 20px;
+}
+.postAddingDiv button{
+  padding: 13px 30px ;
+  border-radius: 20px;
+  position: absolute;
+  right: 0rem;
+}

@@ -1,0 +1,31 @@
+.logo{
+    width: 60px;
+    margin: 10px 20px;
+}
+.logo img{
+    width: 100%;
+}
+.main{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 20px auto;
+    background-color: #dfdddd;
+    align-items: center;
+    border-radius: 10px;
+}
+.flex{
+    margin: 10px auto ;
+}
+.flex nav{
+    display: inline-flex;
+    justify-content: center;
+}
+.flex nav li{
+    list-style: none;
+    padding: 2% 4%;
+}
+.Links{
+    text-decoration: none;
+    color: rgb(88, 86, 86);
+}

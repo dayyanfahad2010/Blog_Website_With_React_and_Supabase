@@ -4,6 +4,7 @@ import {supabase} from '../../App.js'
 const AuthContext =createContext()
 export const AuthContextProvider = ({children}) => {
     const [session,setSession] =useState(null)
+    const [error,setError] =useState("")
 
     const signUpAUser =async (email,password,displayName)=>{
         const {data,error}=await supabase.auth.signUp({
@@ -17,6 +18,7 @@ export const AuthContextProvider = ({children}) => {
         })
         if(error){
             console.log("an error occurred",error)
+            setError(error.message)
             return {success:false ,error}
         }
         return {success:true,data}
@@ -38,6 +40,7 @@ export const AuthContextProvider = ({children}) => {
         })
         if(error){
             console.log("SignIn error",error)
+            setError(error.message)
             return {success:false,error}
         }
         return {success:true,data}
@@ -62,11 +65,13 @@ export const AuthContextProvider = ({children}) => {
         const { error: dbError } = await supabase
             .from('Posts')
             .insert([{
-                user_id: session.user.identities[0].identity_data.display_name,
+                user_id:session.user.id,
+                user_name: session.user.identities[0].identity_data.display_name,
                 post_url: publicUrl,
                 post_title:postTitle,
                 post_description:postDes,
-                Likes:Likes 
+                Likes:Likes ,
+                created_at: new Date().toISOString()
             }]);
 
         if (dbError) {
@@ -75,8 +80,17 @@ export const AuthContextProvider = ({children}) => {
             console.log('Public URL saved to database:', publicUrl);
         }
     };
+    async function signOut() {
+       const { error } = await supabase.auth.signOut()
+        if(error){
+            setError(error)
+            return {success:false,error}
+
+        }
+        return{success:true}
+    }
   return (
-    <AuthContext.Provider value={{session ,signUpAUser ,signIn,uploadFile,SaveToDB}}>
+    <AuthContext.Provider value={{session,error,signOut ,signUpAUser ,signIn,uploadFile,SaveToDB}}>
         {children}
     </AuthContext.Provider>
   )
