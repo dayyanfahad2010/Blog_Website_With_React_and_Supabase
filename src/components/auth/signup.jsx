@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {UserAuth} from './AuthContext'
+import {UserAuth} from './Context'
 import {Link, useNavigate} from 'react-router-dom'
 import './auth.css'
 import ErrorMeassage from '../ErrorMessageShowing'

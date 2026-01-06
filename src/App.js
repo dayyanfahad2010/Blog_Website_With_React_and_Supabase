@@ -1,6 +1,6 @@
 import React from 'react'
 import { createClient } from "@supabase/supabase-js";
-import { AuthProvider } from './components/auth/AuthContext';
+import { AuthProvider } from './components/auth/Context';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Home from './components/Home';

@@ -1,32 +1,17 @@
 import React from 'react'
 import './postCart.css'
-import { supabase } from '../../App';
+import { UserAuth } from '../auth/Context';
 
 const PostCart = (props) => {
+    const {addLikes,session}=UserAuth()
     console.log(props) ;
-    const AddLike = async () => {
-    try {
-        const { error } = await supabase
-        .from('Posts')
-        .update({
-            Likes: (props.postData.Likes || 0) + 1
-        })
-        .eq('id', props.postData.id)
-        console.log(props.postData.id);
-        
+    console.log(session);
+    const AddLikes =async ()=>{
 
-        if (error) {
-            console.error('Like error:', error.message)
-            return
-        }
-
-        // FORCE refresh (because your state is not wired correctly)
-        window.location.reload()
-
-        }
-        catch (err) {
-            console.error(err)
-        }
+        const result=await addLikes(props.postData.id,session.user.id)
+        console.log(result);
+         
+        window.location.reload()    
     }
 
   return (
@@ -51,7 +36,7 @@ const PostCart = (props) => {
         </div>
 
         <div className="post-actions">
-            <button className='LikesBtn' onClick={AddLike}>👍Like</button> <p className='LikesPara'>{props.postData.Likes}</p>
+            <button className='LikesBtn' onClick={AddLikes}>👍Like</button> <p className='LikesPara'>{props.postData.Likes}</p>
             <button>💬 Comment</button>
             <button>↗ Share</button>
         </div>

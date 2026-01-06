@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserAuth } from '../auth/AuthContext'
+import { UserAuth } from '../auth/Context'
 import Header from '../layout/header/header';
 
 const MyProfile = () => {

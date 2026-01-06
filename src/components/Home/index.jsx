@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { UserAuth } from '../auth/AuthContext';
+import { UserAuth } from '../auth/Context';
 import { supabase } from '../../App';
 import PostCart from '../Post/PostCart';
-import { Navigate, useNavigate } from 'react-router-dom';
 import Header from '../layout/header/header';
 
 const Home = () => {
   const [file,setFile]=useState(null)
   const [title,setTitle]=useState("")
   const [des,setDes]=useState("")
-  const [loggedUserPosts,setPosts]=useState([])
   const [allPosts,setAllPosts]=useState([])
   const [loading, setLoading] = useState(true);
   const [err, setError] = useState(null);
-  const {session,error,uploadFile,SaveToDB,signOut}=UserAuth();
-     const navigate =useNavigate();
+  const {session,error,uploadFile,SaveToDB}=UserAuth();
   
     
     const handleFileUpload =async(e)=>{
@@ -50,22 +47,7 @@ const Home = () => {
        const fetchPosts = async () => {
          try {
            const AllPosts = await getAllPosts();
-    
-           const FilterPostsForLoggedUser = AllPosts.filter(post => {
-             return post.user_id === session.user.identities[0].identity_data.display_name;
-           });
-           const postsWithUrlsForLoggedUser = await Promise.all(
-               FilterPostsForLoggedUser.map(async (post) => {
-                   const { data } = supabase.storage
-                       .from('post_image')
-                       .getPublicUrl(post.post_url); 
-                   return {
-                       ...post,
-                       publicUrl: data.publicUrl, 
-                   };
-               })
-           );    
-           setPosts(postsWithUrlsForLoggedUser)    
+  
            const postsWithUrls = await Promise.all(
                AllPosts.map(async (post) => {
                    const { data } = supabase.storage
@@ -91,7 +73,7 @@ const Home = () => {
        }
        
       }, [session])
-      
+    
   return (
     <div>
       <Header/>
@@ -114,6 +96,5 @@ const Home = () => {
   )
 
 } 
-     
     
 export default Home

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from'../../assets/logo.png'
 import './header.css'
-import { UserAuth } from '../../auth/AuthContext'
+import { UserAuth } from '../../auth/Context'
 const Header = () => {
   const {sesison ,signOut}=UserAuth();
   const navigate=useNavigate();
