@@ -137,12 +137,13 @@ export const AuthContextProvider = ({children}) => {
                     setError(error)
                     return {success:false,error,message:"delete"}
                 }
-                const LikesForThatPost=resultOfAllData.data.filter(likes=>likes.post_id===post_id)
+                const resultOfAllDat = await LikesData()
+                const LikesForThatPost=resultOfAllDat.data.filter(likes=>likes.post_id===post_id)
                 if(LikesForThatPost){
                     const UpdateLikes =await UpdatePostLikes(post_id,LikesForThatPost.length) 
                     console.log(UpdateLikes);
                 }
-         
+                
                 
                 return{success:true,data ,message:"successful Delete"}
             }
@@ -157,7 +158,8 @@ export const AuthContextProvider = ({children}) => {
                 setError(error)
                 return {success:false,error}
             }
-            const LikesForThatPost=resultOfAllData.data.filter(likes=>likes.post_id===post_id)
+            const resultOfAllDa = await LikesData()
+            const LikesForThatPost=resultOfAllDa.data.filter(likes=>likes.post_id===post_id)
             if(LikesForThatPost){
                 const UpdateLikes =await UpdatePostLikes(post_id,LikesForThatPost.length) 
                 console.log(UpdateLikes);
