@@ -5,13 +5,9 @@ import { Navigate,Outlet } from 'react-router-dom'
 const ProtectedRoutes = () => {
     const {session}= UserAuth();
     console.log(session );
-    // console.log(session);
-    function ProtectRoute(){
-        
+    function ProtectRoute(){        
         return session!=null? true:false
-        
     }
-    // console.log(result.fulfilled);
     
     const h=setInterval(() => {
         const result =ProtectRoute()
