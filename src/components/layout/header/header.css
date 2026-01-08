@@ -5,6 +5,9 @@
 .logo img{
     width: 100%;
 }
+.nav-menu{
+    display: none;
+}
 .main{
     display: flex;
     flex-wrap: wrap;
@@ -13,6 +16,7 @@
     background-color: #dfdddd;
     align-items: center;
     border-radius: 10px;
+    position: relative;
 }
 .flex{
     margin: 10px auto ;
@@ -28,4 +32,25 @@
 .Links{
     text-decoration: none;
     color: rgb(88, 86, 86);
+}
+@media (max-width:670px){
+    .flex{
+        /* position: relative; */
+    }
+    .flex nav{
+        display: block;
+        position: absolute;
+        right: -500px;
+    }
+    .nav-menu{
+        display: block;
+        position: absolute;
+        right: 30px;
+        top: 20px;
+    }
+    .showMenu{
+        right: -50px !important;
+        background-color: #dfdddd;
+        padding: 40px;
+    }
 }

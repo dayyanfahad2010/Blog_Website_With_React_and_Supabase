@@ -3,6 +3,7 @@ import { UserAuth } from '../auth/Context';
 import { supabase } from '../../App';
 import PostCart from '../Post/PostCart';
 import Header from '../layout/header/header';
+import './home.css'
 
 const Home = () => {
   const [file,setFile]=useState(null)
@@ -75,13 +76,21 @@ const Home = () => {
       }, [session])
     
   return (
-    <div>
+    <>
+    
       <Header/>
+    <div className='app-wrapper'>
     <div className='postAddingDiv'>
-      <input type="text" placeholder='Post Title' value={title} onChange={(e)=>setTitle(e.target.value)} />
-      <input type="text" placeholder='Write Something'value={des} onChange={(e)=>setDes(e.target.value)} />
-      <input type="file"  onChange={(e)=>setFile(e.target.files[0])}/>
-      <button onClick={handleFileUpload}>Post</button>
+      <div className="card-small">
+        <div className="share-box-inner">
+          <div className="profile-thumb">
+            <img src="../assets/contact.png" alt="" />
+          </div>
+          <input type="text" className='share-text-box' placeholder='Write Something'value={des} onChange={(e)=>setDes(e.target.value)} />
+          <input type="file" className='file' onChange={(e)=>setFile(e.target.files[0])}/>
+          <button onClick={handleFileUpload} className='btn-share'>Post</button>
+        </div>
+      </div>
     </div>
     <div className='PostDiv'> 
         {allPosts.map((element, index) => (
@@ -93,6 +102,7 @@ const Home = () => {
       ))}
     </div>
     </div>
+    </>
   )
 
 } 

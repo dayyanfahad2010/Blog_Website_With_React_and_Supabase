@@ -21,6 +21,7 @@ export const AuthContextProvider = ({children}) => {
             setError(error.message)
             return {success:false ,error}
         }
+        setError(null)
         return {success:true,data}
     }
 
@@ -54,7 +55,7 @@ export const AuthContextProvider = ({children}) => {
             return {success:true,data}
         }
     }
-    const SaveToDB = async (filePath,postDes,postTitle) => {
+    const SaveToDB = async (filePath,postDes) => {
         let Like=0
         
         const { data } = supabase.storage
@@ -69,7 +70,6 @@ export const AuthContextProvider = ({children}) => {
             user_id:session.user.id,
             user_name: session.user.identities[0].identity_data.display_name,
             post_url: publicUrl,
-            post_title:postTitle,
             post_description:postDes,
             Likes:Like ,
             created_at: new Date().toISOString()

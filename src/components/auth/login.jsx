@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from './Context';
 import './auth.css'
 import ErrorMeassage from '../ErrorMessageShowing';
+import { Bounce, toast } from 'react-toastify';
 
 const Login = () => {
    const [email,setEmail]=useState("");
@@ -19,6 +20,17 @@ const Login = () => {
         try{
             const result = await signIn(email,password);
             if(result.success){
+               toast.success("User Successfully SignUp",{
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+              })
                 navigate('/')
             }
         }catch(err){
@@ -32,12 +44,17 @@ const Login = () => {
   return (
     <>
     <div className='mainDiv'>
-        <h1>Login</h1>
-        <p>Don't have an account <Link to='/signup'>SignUp</Link></p>
-        <input type="text" placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <input type="text" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
-        <button onClick={handleSignIn}>SignIn</button>
-      <ErrorMeassage errorMessage={error}/>  
+      <div className="form-wrapper">
+        <h3 className='title'>Login</h3>
+        <div className="form-lower-div">
+          <input type="email" placeholder='Email' className='single-field' value={email} onChange={(e)=>setEmail(e.target.value)}/>
+          <input type="password" placeholder='Password' className='single-field' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+          <button onClick={handleSignIn} className='submit-btn'>SignIn</button>
+        <ErrorMeassage errorMessage={error}/>  
+          <h6 className='login_link'>Don't have an account <Link to='/signup' style={{color:"#dc4734",textDecoration:'none'}}>SignUp</Link></h6>
+        </div>
+
+      </div>
     </div>
     </>
   )

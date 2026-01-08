@@ -4,43 +4,78 @@
     box-sizing: border-box;
 }
 .mainDiv{
-    width: 500px;
-    height: 450px;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    margin: 100px auto;
-    padding: 20px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    width: 40%;
     align-items: center;
-    font-family:Arial, Helvetica, sans-serif;
-    /* background-color: rgba(134, 134, 134, 0.637); */
+    justify-content: center;
+    margin: 70px auto;
 }
-.mainDiv h1{
-    margin: 20px auto;
+.create-acc-heading{
+    color: #dc4734;
+    font-size: 30px;
+    font-weight: 800;
+    padding-bottom: 47px;
     text-align: center;
-    color: #0000FF;
 }
-.mainDiv p{
-    font-size: 15px;
-    font-weight: 600;
+.form-wrapper{
+    max-width: 572px;
+    box-shadow: 0px 3px 20px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    padding: 47px 30px;
 }
-.mainDiv input{
-    width: 90%;
-    padding: 20px;
-    margin: 10px auto;
-    border-radius: 10px;
-    background: none;
+.title{
+    width: 100%;
+    line-height: 22px;
+    color:#fff;
+    background-color: #dc4734;
+    font-size: 18px;
+    padding: 23px 0 ;
 }
-.mainDiv button{
-    padding: 13px 30px;
-    margin: 10px 150px 20px;
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
-    outline: none;
-    background-color: #0000FF;
-    transition: transform 1s ease-in;
+.form-lower-div{
+    background-color: #fff;
+    position: relative;
+    padding: 42px 50px 50px;
 }
-.mainDiv button:hover{
-    transform: translateY(-5px);
+.single-field{
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.submit-btn{
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 15px 20px;
+    display: block;
+    background-color: #dc4734;
+    border: 1px solid transparent;
+    margin-top: 23px;
+    line-height: 16px;
+}
+.login_link{
+    font-size: 16px;
+    padding-top: 28px;
+    color: #333333;
+    margin-bottom: 0;
+}
+.login_link Link{
+    color: #dc4734;
 }
 
+@media (max-width:800px){
+    .mainDiv{
+        width: 80%;
+    }
+}
+@media (max-width:500px) {
+    .form-lower-div{
+        padding: 5px 10px 10px;
+    }
+}
