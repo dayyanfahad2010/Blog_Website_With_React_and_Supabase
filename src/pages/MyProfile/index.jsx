@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserAuth } from '../../features/auth/AuthContext'
-import Header from '../../components/Layout/Header/header';
+import Header from '../../components/Layout/Header/header.jsx';
 import MyPosts from '../../features/posts/MyPosts/MyPosts';
 import './MyProfile.css'
 import contact from '../../assets/contact.png'
