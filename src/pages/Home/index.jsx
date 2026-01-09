@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../../features/auth/AuthContext';
 import { supabase } from '../../App';
 import PostCart from '../../features/posts/PostCart/index';
-import Header from '../../components/Layout/Header/header';
+import Header from '../../components/Layout/Header/header.jsx';
 import './home.css'
 
 const Home = () => {
