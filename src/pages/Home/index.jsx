@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { UserAuth } from '../auth/Context';
+import { UserAuth } from '../../features/auth/AuthContext';
 import { supabase } from '../../App';
-import PostCart from '../Post/PostCart';
-import Header from '../layout/header/header';
+import PostCart from '../../features/posts/PostCart/index';
+import Header from '../../components/Layout/Header/header';
 import './home.css'
 
 const Home = () => {

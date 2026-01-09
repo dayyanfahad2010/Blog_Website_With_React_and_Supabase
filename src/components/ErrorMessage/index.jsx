@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Bounce, toast } from 'react-toastify';
 
 const ErrorMeassage = ({errorMessage}) => {
-    const timeoutIdRef=useRef()
-    const [err,setError]=useState(errorMessage)
      useEffect(() => {
          toast.error(errorMessage,{
             position: "top-center",

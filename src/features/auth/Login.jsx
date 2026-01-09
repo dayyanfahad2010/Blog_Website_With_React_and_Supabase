@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from './Context';
+import { UserAuth } from './AuthContext';
 import './auth.css'
-import ErrorMeassage from '../ErrorMessageShowing';
+import ErrorMeassage from '../../components/ErrorMessage/index';
 import { Bounce, toast } from 'react-toastify';
 
 const Login = () => {

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import './postCart.css'
-import { UserAuth } from '../auth/Context';
-import contact from '../assets/contact.png'
-import CommentSection from '../commentSection';
-import { Link } from 'react-router-dom';
+import { UserAuth } from '../../auth/AuthContext';
+import contact from '../../../assets/contact.png'
+import CommentSection from '../../comments/index';
 const PostCart = (props) => {
     const [liked,setLiked]=useState(false)
     const {addLikes,session}=UserAuth()

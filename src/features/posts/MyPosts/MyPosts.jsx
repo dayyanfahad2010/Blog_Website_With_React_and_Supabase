@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { supabase } from '../../App';
-import { UserAuth } from '../auth/Context';
-import PostCart from '../Post/PostCart';
-import Header from '../layout/header/header';
+import { supabase } from '../../../App';
+import { UserAuth } from '../../auth/AuthContext';
+import PostCart from '../PostCart/index';
 
 const MyPosts = () => {
     const [myPosts,setPosts]=useState([])
@@ -57,7 +56,6 @@ const MyPosts = () => {
 
   return (
     <div>
-        <Header/>
         {
             myPosts.map((element,index)=>{
                 return <PostCart 

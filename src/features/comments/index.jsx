@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { UserAuth } from '../auth/Context'
+import { UserAuth } from '../auth/AuthContext'
+import './comment.css'
+import CommentCard from '../../components/CommentCard/CommentCart'
 
 const CommentSection = (props) => {
     const [comment,setComment]=useState("")
     const [Allcomments,setAllComments]=useState([])
     const {addComments,CommentsData,session}=UserAuth()
     const AddComments=async()=>{
-      console.log(props,session);
       const user_name=session.user.identities[0].identity_data.display_name
+      console.log(props,session);
         
       const result =await addComments(props.props.postData.id,session.user.id,user_name,comment)
       console.log(result);  
@@ -33,12 +35,8 @@ const CommentSection = (props) => {
 
       {/* List */}
       <div className="comment-list">
-        {Allcomments.map((c) => (
-          <div className="comment" key={c.id}>
-            <strong>{c.user_name}</strong>
-            <span className="time">2 hours</span>
-            <p>{c.comment}</p>
-          </div>
+        {Allcomments.map((c) => (        
+          <CommentCard key={c.id} user={c.user_name} text={c.comment} />
         ))}
       </div>
     </div>

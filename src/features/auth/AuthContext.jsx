@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import {supabase} from '../../App.js'
+import {supabase} from '../../App'
 
 const AuthContext =createContext()
 export const AuthContextProvider = ({children}) => {

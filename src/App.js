@@ -1,16 +1,16 @@
 import React from 'react'
 import { createClient } from "@supabase/supabase-js";
-import { AuthProvider } from './components/auth/Context';
+import { AuthProvider } from './features/auth/AuthContext';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
-import Home from './components/Home';
-import Login from './components/auth/login';
-import Signup from './components/auth/signup';
-import ProtectedRoutes from './services/ProtectedRoutes';
-import MyPosts from './components/pages/MyPosts';
-import MyProfile from './components/pages/MyProfile';
+import Home from './pages/Home/index';
+import Login from './features/auth/Login';
+import Signup from './features/auth/Signup';
+import ProtectedRoutes from './features/routes/ProtectedRoutes';
+import MyPosts from './features/posts/MyPosts/MyPosts';
+import MyProfile from './pages/MyProfile/index';
 import { ToastContainer } from 'react-toastify';
-import SinglePost from './components/SinglePost/SinglePost';
+import SinglePost from './features/posts/SinglePost/SinglePost';
 
 
 export const supabase = createClient("https://kffegfmdjhkzxdxtmqux.supabase.co", "sb_publishable_hQM2ADpUNT1cC22djBVlaA_y2Q5ToEF",

@@ -1,0 +1,60 @@
+.comment-card {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.avatars {
+  width: 40px;
+  height: 40px;
+  background: #ff8a50;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatars img{
+    width: 80%;
+    border-radius: 20px;
+}
+.comment-content {
+  max-width: 80%;
+}
+
+.comment-bubble {
+  background: #f0f2f5;
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+
+.comment-bubble strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.comment-bubble p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+  padding-left: 8px;
+}
+
+.comment-actions span {
+  cursor: pointer;
+}
+
+.comment-actions span:hover {
+  text-decoration: underline;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserAuth } from '../components/auth/Context'
+import { UserAuth } from '../auth/AuthContext'
 import { Navigate,Outlet } from 'react-router-dom'
 
 const ProtectedRoutes = () => {
