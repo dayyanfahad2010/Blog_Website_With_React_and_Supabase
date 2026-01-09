@@ -99,6 +99,24 @@ export const AuthContextProvider = ({children}) => {
         }
         return {success:true,data,message:"Posts"}
     }
+    async function CommentsData(){
+         const { data, error } = await supabase
+        .from('comments')
+        .select()
+        if(error){
+            return{success:false,error,message:'comments'}
+        }
+        return {success:true,data,message:"comments"}
+    }
+    async function UpdatePostComments(post_id,comments){
+        const { error } = await supabase
+        .from('Posts')
+        .update({ comment: comments })
+        .eq('id', post_id)
+        if(error){
+            return{success:false,error}
+        }
+    }
     async function UpdatePostLikes(post_id,likes){
         const { error } = await supabase
         .from('Posts')
@@ -119,12 +137,9 @@ export const AuthContextProvider = ({children}) => {
     }
     async function addLikes(post_id,user_id) {
         const resultOfAllData = await LikesData()
-        const PostForLike =await PostsData()
         if(resultOfAllData.success){
             const loop=resultOfAllData.data.find(postAndUserWasFound => postAndUserWasFound.post_id===post_id && postAndUserWasFound.user_id===user_id)
-            const FindPost =PostForLike.data.find(findpost=>findpost.id===post_id)
             
-            console.log(FindPost);
             if(loop){
                 const { data, error } = await supabase
                 .from('likes')
@@ -137,14 +152,13 @@ export const AuthContextProvider = ({children}) => {
                     setError(error)
                     return {success:false,error,message:"delete"}
                 }
+                
                 const resultOfAllDat = await LikesData()
                 const LikesForThatPost=resultOfAllDat.data.filter(likes=>likes.post_id===post_id)
                 if(LikesForThatPost){
                     const UpdateLikes =await UpdatePostLikes(post_id,LikesForThatPost.length) 
                     console.log(UpdateLikes);
                 }
-                
-                
                 return{success:true,data ,message:"successful Delete"}
             }
             
@@ -169,8 +183,25 @@ export const AuthContextProvider = ({children}) => {
             return {success:true,data,message:"successful Insert"}
         }
     }
+    async function addComments(post_id,user_id,user_name,comment) {
+        const { error } = await supabase
+        .from('comments')
+        .insert({  post_id:post_id ,user_id: user_id,user_name:user_name,comment:comment})
+        
+        if(error){
+            console.log(error);
+            setError(error)
+            return {success:false,error}
+        }
+   
+        const resultOfAllData = await CommentsData()
+        const CommentsForThatPost=resultOfAllData.data.filter(comments=>comments.post_id===post_id)
+        await UpdatePostComments(post_id,CommentsForThatPost.length)
+        return {success:true,CommentsForThatPost,message:"successful Insert"}
+            
+    }
   return (
-    <AuthContext.Provider value={{session,error,signOut ,signUpAUser ,signIn,uploadFile,SaveToDB,addLikes}}>
+    <AuthContext.Provider value={{session,error,signOut ,signUpAUser,PostsData ,CommentsData,signIn,uploadFile,SaveToDB,addLikes,addComments}}>
         {children}
     </AuthContext.Provider>
   )

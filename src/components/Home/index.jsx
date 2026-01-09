@@ -95,7 +95,7 @@ const Home = () => {
     <div className='PostDiv'> 
         {allPosts.map((element, index) => (
           <PostCart 
-            key={index} 
+            key={element.id} 
             postData={element}
             post_image={element.publicUrl} 
         />

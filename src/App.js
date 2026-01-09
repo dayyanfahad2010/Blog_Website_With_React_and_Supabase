@@ -10,6 +10,7 @@ import ProtectedRoutes from './services/ProtectedRoutes';
 import MyPosts from './components/pages/MyPosts';
 import MyProfile from './components/pages/MyProfile';
 import { ToastContainer } from 'react-toastify';
+import SinglePost from './components/SinglePost/SinglePost';
 
 
 export const supabase = createClient("https://kffegfmdjhkzxdxtmqux.supabase.co", "sb_publishable_hQM2ADpUNT1cC22djBVlaA_y2Q5ToEF",
@@ -35,6 +36,7 @@ const App = () => {
           {/* </Route> */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/post/:id" element={<SinglePost />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>

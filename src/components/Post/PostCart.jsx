@@ -2,71 +2,88 @@ import React, { useState } from 'react'
 import './postCart.css'
 import { UserAuth } from '../auth/Context';
 import contact from '../assets/contact.png'
+import CommentSection from '../commentSection';
+import { Link } from 'react-router-dom';
 const PostCart = (props) => {
     const [liked,setLiked]=useState(false)
     const {addLikes,session}=UserAuth()
     console.log(props) ;
     console.log(session);
     const AddLikes =async ()=>{
-
         const result=await addLikes(props.postData.id,session.user.id)
         console.log(result);
          setLiked(!liked)
         window.location.reload()    
     }
+     const handleShare = async () => {
+      const url = `${window.location.origin}/post/${props.postData.id}`;
+
+        if (navigator.share) {
+          await navigator.share({ title: "Post", url });
+        } else {
+          await navigator.clipboard.writeText(url);
+          alert("Link copied");
+        }
+    };
+
 
   return (
-   <div className="post">
-      {/* Header */}
-      <div className="post-header">
-        <div className="user">
-          <img
-            src={contact}
-            alt="user"
-          />
-          <div>
-            <h4>{props.postData.user_name}</h4>
-            <span>20 min ago</span>
+      <div className="post">
+        {/* Header */}
+        <div className="post-header">
+          <div className="user">
+            <img
+              src={contact}
+              alt="user"
+            />
+            <div>
+              <h4>{props.postData.user_name}</h4>
+              <span>20 min ago</span>
+            </div>
+          </div>
+          <span className="menu">☰</span>
+        </div>
+
+        {/* Content */}
+        <p className="post-text">
+          {props.postData.post_description}
+        </p>
+
+        <img
+          className="post-image"
+          src={props.postData.post_url}
+          alt="post"
+        />
+
+        {/* Footer */}
+        <div className="post-footer">
+          <div className="likes">
+            ❤️ <span>{props.postData.Likes} people like this</span>
+          </div>
+
+          <div className="stats">
+            <span>💬 {props.postData.comment}</span>
+            <span>🔁 07</span>
           </div>
         </div>
-        <span className="menu">☰</span>
-      </div>
 
-      {/* Content */}
-      <p className="post-text">
-        {props.postData.post_description}
-      </p>
-
-      <img
-        className="post-image"
-        src={props.postData.post_url}
-        alt="post"
-      />
-
-      {/* Footer */}
-      <div className="post-footer">
-        <div className="likes">
-          ❤️ <span>{props.postData.Likes} people like this</span>
+        {/* Actions */}
+        <div className="post-actions">
+          <button
+            className={liked ? "active" : ""}
+            onClick={AddLikes}
+          >
+            ❤️ Like
+          </button>
+          <button>💬 Comment</button>
+          <button onClick={handleShare}>↗ Share</button>
         </div>
-
-        <div className="stats">
-          <span>💬 41</span>
-          <span>🔁 07</span>
+        <div>
+          <CommentSection props={props}/>
         </div>
       </div>
-
-      {/* Actions */}
-      <div className="post-actions">
-        <button
-          className={liked ? "active" : ""}
-          onClick={AddLikes}
-        >
-          ❤️ Like
-        </button>
-        <button>💬 Comment</button>
-        <button>↗ Share</button>
-      </div>
-    </div>
+    
+   
 
   )
 }
