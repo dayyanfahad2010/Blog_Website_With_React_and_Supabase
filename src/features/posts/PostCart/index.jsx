@@ -5,14 +5,21 @@ import contact from '../../../assets/contact.png'
 import CommentSection from '../../comments/index';
 const PostCart = (props) => {
     const [liked,setLiked]=useState(false)
+    const [likesCount,setLikesCount]=useState(props.postData.Likes)
     const {addLikes,session}=UserAuth()
     console.log(props) ;
     console.log(session);
     const AddLikes =async ()=>{
-        const result=await addLikes(props.postData.id,session.user.id)
-        console.log(result);
-         setLiked(!liked)
-        window.location.reload()    
+      const result=await addLikes(props.postData.id,session.user.id)
+      console.log(result);
+      if(result.message==="successful Delete"){
+        setLikesCount(likesCount-1) 
+        setLiked(false)
+      }
+      else{
+        setLikesCount(likesCount+1) 
+        setLiked(true)
+      }
     }
      const handleShare = async () => {
       const url = `${window.location.origin}/post/${props.postData.id}`;
@@ -28,7 +35,6 @@ const PostCart = (props) => {
 
   return (
       <div className="post">
-        {/* Header */}
         <div className="post-header">
           <div className="user">
             <img
@@ -43,7 +49,6 @@ const PostCart = (props) => {
           <span className="menu">☰</span>
         </div>
 
-        {/* Content */}
         <p className="post-text">
           {props.postData.post_description}
         </p>
@@ -54,10 +59,9 @@ const PostCart = (props) => {
           alt="post"
         />
 
-        {/* Footer */}
         <div className="post-footer">
           <div className="likes">
-            ❤️ <span>{props.postData.Likes} people like this</span>
+            ❤️ <span>{likesCount} people like this</span>
           </div>
 
           <div className="stats">
@@ -66,7 +70,6 @@ const PostCart = (props) => {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="post-actions">
           <button
             className={liked ? "active" : ""}
