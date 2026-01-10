@@ -4,19 +4,21 @@ import { supabase } from '../../App';
 import PostCart from '../../features/posts/PostCart/index';
 import Header from '../../components/Layout/Header/header.jsx';
 import './home.css'
+import { Bounce, toast } from 'react-toastify';
 
 const Home = () => {
   const [file,setFile]=useState(null)
   const [title,setTitle]=useState("")
   const [des,setDes]=useState("")
   const [allPosts,setAllPosts]=useState([])
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [err, setError] = useState(null);
   const {session,error,uploadFile,SaveToDB}=UserAuth();
   
     
     const handleFileUpload =async(e)=>{
       e.preventDefault();
+      setLoading(false)
        const Filepath =`avatars/${file.name}`
        console.log(Filepath);
        
@@ -24,6 +26,20 @@ const Home = () => {
        if(result.success){
          await SaveToDB(Filepath,des,title)    
          console.log(result);
+         setLoading(true)
+         toast.success("Post Addded Successfully",
+            {position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce}
+         )
+         setFile(null)
+         setDes("")
         }
        else{
          console.log(result.error);
@@ -61,6 +77,7 @@ const Home = () => {
                })
            );        
            setAllPosts(postsWithUrls);
+           
          } catch (err) {
            console.log(err);
            setError(err)
@@ -73,7 +90,7 @@ const Home = () => {
          fetchPosts();
        }
        
-      }, [session])
+      }, [session,loading])
     
   return (
     <>
