@@ -11,6 +11,7 @@ import MyPosts from './features/posts/MyPosts/MyPosts';
 import MyProfile from './pages/MyProfile/index';
 import { ToastContainer } from 'react-toastify';
 import SinglePost from './features/posts/SinglePost/SinglePost';
+import SingleUser from './features/SingleUser/SingleUser';
 
 
 export const supabase = createClient("https://kffegfmdjhkzxdxtmqux.supabase.co", "sb_publishable_hQM2ADpUNT1cC22djBVlaA_y2Q5ToEF",
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/post/:id" element={<SinglePost />} />
+          <Route path="/user/:id" element={<SingleUser />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>
