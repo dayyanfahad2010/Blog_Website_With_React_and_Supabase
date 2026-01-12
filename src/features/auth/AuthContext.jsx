@@ -17,12 +17,19 @@ export const AuthContextProvider = ({children}) => {
             }
         })
         if(error){
-            console.log("an error occurred",error)
             setError(error.message)
             return {success:false ,error}
         }
-        setError(null)
-        return {success:true,data}
+        if(data.user){
+            await supabase.from("profiles").insert({
+                id: data.user.id,
+                user_name:data.user.identities[0].identity_data.display_name,
+                user_email: data.user.email,
+                connections:0,
+            })
+            setError(null)
+            return {success:true,data}
+        }
     }
 
     useEffect(()=>{
@@ -40,30 +47,24 @@ export const AuthContextProvider = ({children}) => {
             password:password
         })
         if(error){
-            console.log("SignIn error",error)
             setError(error.message)
             return {success:false,error}
         }
         return {success:true,data}
     }
-    const uploadFile=async (file_path,file,postTitle,postDes) =>{
+    const uploadFile=async (file_path,file) =>{
         const { data, error } = await supabase.storage.from('post_image').upload(file_path, file)
         if (error) {
             return {success:false,error}
-        } else {
-            
-            return {success:true,data}
-        }
+        } 
+        return {success:true,data}
     }
     const SaveToDB = async (filePath,postDes) => {
-        let Like=0
-        
         const { data } = supabase.storage
         .from('post_image')
         .getPublicUrl(filePath);
         
         const publicUrl = data.publicUrl;
-        
         const { error: dbError } = await supabase
         .from('Posts')
         .insert([{
@@ -71,27 +72,24 @@ export const AuthContextProvider = ({children}) => {
             user_name: session.user.identities[0].identity_data.display_name,
             post_url: publicUrl,
             post_description:postDes,
-            Likes:Like ,
+            Likes:0 ,
             created_at: new Date().toISOString()
         }]);
-        
         if (dbError) {
-            console.error('Error saving URL to DB:', dbError.message);
-        } else {
-            console.log('Public URL saved to database:', publicUrl);
+            setError(dbError.message);
         }
     };
+
     async function signOut() {
         const { error } = await supabase.auth.signOut()
         if(error){
             setError(error)
-            return {success:false,error}
-            
+            return {success:false,error}        
         }
-        return{success:true}
+        return {success:true}        
     }
     async function PostsData(){
-         const { data, error } = await supabase
+        const { data, error } = await supabase
         .from('Posts')
         .select()
         if(error){
@@ -139,25 +137,20 @@ export const AuthContextProvider = ({children}) => {
         const resultOfAllData = await LikesData()
         if(resultOfAllData.success){
             const loop=resultOfAllData.data.find(postAndUserWasFound => postAndUserWasFound.post_id===post_id && postAndUserWasFound.user_id===user_id)
-            
             if(loop){
                 const { data, error } = await supabase
                 .from('likes')
                 .delete()
                 .eq('id', loop.id)
                 .select()
-                
                 if(error){
-                    console.log(error);
                     setError(error)
                     return {success:false,error,message:"delete"}
                 }
-                
                 const resultOfAllDat = await LikesData()
                 const LikesForThatPost=resultOfAllDat.data.filter(likes=>likes.post_id===post_id)
                 if(LikesForThatPost){
                     const UpdateLikes =await UpdatePostLikes(post_id,LikesForThatPost.length) 
-                    console.log(UpdateLikes);
                 }
                 return{success:true,data ,message:"successful Delete"}
             }
@@ -166,20 +159,15 @@ export const AuthContextProvider = ({children}) => {
             .from('likes')
             .insert({  user_id: user_id,post_id:post_id })
             .select()
-            
             if(error){
-                console.log(error);
-                setError(error)
+                setError(error.message)
                 return {success:false,error}
             }
             const resultOfAllDa = await LikesData()
             const LikesForThatPost=resultOfAllDa.data.filter(likes=>likes.post_id===post_id)
             if(LikesForThatPost){
                 const UpdateLikes =await UpdatePostLikes(post_id,LikesForThatPost.length) 
-                console.log(UpdateLikes);
             }
-
-            
             return {success:true,data,message:"successful Insert"}
         }
     }
@@ -187,24 +175,23 @@ export const AuthContextProvider = ({children}) => {
         const { error } = await supabase
         .from('comments')
         .insert({  post_id:post_id ,user_id: user_id,user_name:user_name,comment:comment})
-        
         if(error){
-            console.log(error);
-            setError(error)
+            setError(error.message)
             return {success:false,error}
         }
-   
         const resultOfAllData = await CommentsData()
         const CommentsForThatPost=resultOfAllData.data.filter(comments=>comments.post_id===post_id)
         await UpdatePostComments(post_id,CommentsForThatPost.length)
         return {success:true,CommentsForThatPost,message:"successful Insert"}
             
     }
+    
   return (
     <AuthContext.Provider value={{session,error,signOut ,signUpAUser,PostsData ,CommentsData,signIn,uploadFile,SaveToDB,addLikes,addComments}}>
         {children}
     </AuthContext.Provider>
   )
+
 }
 
 export const UserAuth =()=>{ return useContext(AuthContext)}

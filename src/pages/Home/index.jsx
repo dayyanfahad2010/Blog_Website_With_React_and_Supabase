@@ -13,7 +13,7 @@ const Home = () => {
   const [allPosts,setAllPosts]=useState([])
   const [loading, setLoading] = useState();
   const [err, setError] = useState(null);
-  const {session,error,uploadFile,SaveToDB}=UserAuth();
+  const {session,error,uploadFile,getAllUsers,SaveToDB}=UserAuth();
   
     
     const handleFileUpload =async(e)=>{
@@ -77,6 +77,8 @@ const Home = () => {
                })
            );        
            setAllPosts(postsWithUrls);
+           const result=await getAllUsers()
+           console.log(result);
            
          } catch (err) {
            console.log(err);
