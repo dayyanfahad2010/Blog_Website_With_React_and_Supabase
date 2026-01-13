@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from'../../../assets/logo.png'
 import './header.css'
 import { UserAuth } from '../../../features/auth/AuthContext'
-import { supabase } from '../../../App'
-import ProfileCart from '../../../features/profilecart/ProfileCart'
+import SearchUsers from '../../../features/SearchUser/SearchUser'
 const Header = () => {
   const {signOut}=UserAuth();
-  const [search,setSearch]=useState("")
-  const [profile,setProfile]=useState("")
   const navigate=useNavigate();
  const handleLogOut =async ()=>{
         const result=await signOut()
@@ -17,34 +14,18 @@ const Header = () => {
           navigate('/login')
         }
       }
-      const loadProfile = async () => {
-        // const { data: { user } } = await supabase.auth.getUser();
-        const { data } = await supabase
-        .from("profiles")
-        .select("*")
-
-        data.map((c)=>{
-          if(c.user_name===search){
-            setProfile(c.id);
-            console.log(c.user_name);
-            navigate('/user/:c.id')
-          }
-        })
-      };
-
   return (
     <>    
     <div className='main '>
       <nav className="navbar navbar-expand-lg ">
           <div className="container-fluid ">
-            <input type="search" value={search} onChange={(e)=>setSearch(e.target.value)} />
-            <button onClick={loadProfile}>Search</button>
             <Link className="navbar-brand logo me-5" to={'/'}> <img src={logo} alt="" /></Link>
+            <SearchUsers/>
             <button className="navbar-toggler ms-5 " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse ms-lg-5 ps-lg-5" id="navbarSupportedContent">
-              <ul className="navbar-nav ms-lg-5 mb-2 ps-lg-5 mb-lg-0 ">
+            <div className="collapse navbar-collapse ms-lg-2 " id="navbarSupportedContent">
+              <ul className="navbar-nav ms-lg-3 mb-2  mb-lg-0 ">
                 <li className="nav-item">
                   <Link className="nav-link active " aria-current="page" to={'/'}>Home</Link>
                 </li>

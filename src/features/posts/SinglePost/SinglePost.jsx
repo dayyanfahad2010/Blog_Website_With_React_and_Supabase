@@ -30,7 +30,7 @@ export default function SinglePost() {
             return(   
                 <PostCart key={c.id} postData={c}/>
             )
-        }): <>Post ID: {id}</>
+        }): <>Loading ...</>
         }
         </>
     )                     

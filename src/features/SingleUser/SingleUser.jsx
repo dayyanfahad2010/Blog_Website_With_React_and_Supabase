@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../../components/Layout/Header/header";
 import { supabase } from "../../App";
 import ProfileCart from "../profilecart/ProfileCart";
+import UserPosts from "../posts/UserPosts/UserPosts";
 
 export default function SingleUser() {
     const { id } = useParams();
@@ -25,8 +26,9 @@ export default function SingleUser() {
         <Header/>
         {user !==""? <>
                 <ProfileCart  profile={user}/>
+                <UserPosts/>
                 </>
-        : <>User ID: {id}</>
+        : <>Loading ...</>
         }
         </>
     )                     

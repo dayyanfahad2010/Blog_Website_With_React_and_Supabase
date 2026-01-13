@@ -7,8 +7,6 @@ const PostCart = (props) => {
     const [liked,setLiked]=useState(false)
     const [likesCount,setLikesCount]=useState(props.postData.Likes)
     const {addLikes,session}=UserAuth()
-    console.log(props) ;
-    console.log(session);
     const AddLikes =async ()=>{
       const result=await addLikes(props.postData.id,session.user.id)
       console.log(result);
